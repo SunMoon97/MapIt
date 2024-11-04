@@ -1,0 +1,209 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Modern font */
+    background-color: #f0f4f8; /* Softer background color */
+    margin: 0;
+    padding: 0;
+  }
+  
+  .card {
+    width: 300px; /* Increased card width */
+    max-width: 80%; /* Responsive max-width */
+    height: auto; /* Auto height to accommodate content */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff; /* White background for cards */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    padding: 20px; /* More padding for internal spacing */
+    transition: transform 0.2s; /* Smooth transform on hover */
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+  }
+  
+  label {
+    width: max-content;
+    color: tomato;
+    font-size: 16px; /* Slightly larger font size for labels */
+    border-bottom: 2px solid tomato;
+    margin: 10px 0; /* Increased margin for labels */
+    padding-bottom: 5px; /* More space below labels */
+    font-weight: bold; /* Bold labels */
+  }
+  .form {
+    width: 100%; /* Full width for the form */
+    max-width: 400px; /* Maximum width for larger screens */
+    margin: 20px auto; /* Centering the form */
+    padding: 20px; /* Internal padding */
+    background-color: #fff; /* Card background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  .form-label {
+    display: block; /* Block display for labels */
+    margin: 15px 0 5px; /* Spacing around labels */
+    font-weight: bold; /* Bold labels */
+    color: tomato; /* Label color */
+  }
+  
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: 100%; /* Full width for inputs */
+    padding: 10px; /* Padding for inputs */
+    margin-bottom: 15px; /* Spacing below inputs */
+    border: 2px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners for inputs */
+    transition: border-color 0.3s ease; /* Smooth border transition */
+  }
+  
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    outline: none; /* Remove outline */
+    border-color: tomato; /* Change border color on focus */
+  }
+  
+  .form-textarea {
+    resize: vertical; /* Allow vertical resizing only */
+    min-height: 100px; /* Minimum height for the textarea */
+  }
+  
+  .submitButton {
+    width: 100%; /* Full width for button */
+    padding: 12px; /* Increased padding for buttons */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: tomato;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
+  }
+  
+  .submitButton:hover {
+    background-color: darkred; /* Darker color on hover */
+    transform: scale(1.05); /* Slight scaling on hover */
+  }
+  
+  
+  .desc {
+    font-size: 16px; /* Increased description font size */
+    color: #444; /* Darker color for better readability */
+  }
+  
+  .star {
+    color: gold;
+  }
+  
+  .username {
+    font-size: 14px;
+    color: #666; /* Softer color */
+  }
+  
+  .date {
+    font-size: 12px;
+    color: #888; /* Gray color for less emphasis */
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex;
+    
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.2s;
+  }
+  
+  input,
+  textarea {
+    border: none;
+    
+    border-bottom: 2px solid #ccc; /* Light border for inputs */
+    padding: 10px; /* More internal padding */
+    margin-bottom: 15px; /* Increased space below inputs */
+    transition: border-color 0.3s ease; /* Smooth transition */
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 14px; /* Larger placeholder text */
+    color: #aaa; /* Softer color */
+    
+  }
+  
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-bottom: 2px solid tomato; /* Border color change on focus */
+  }
+  
+  .submitButton {
+    border: none;
+    padding: 12px; /* Increased padding for buttons */
+    border-radius: 6px;
+    color: white;
+    background-color: tomato;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
+  }
+  
+  .submitButton:hover {
+    background-color: darkred; /* Darker color on hover */
+    transform: scale(1.05); /* Slight scaling on hover */
+  }
+  
+  .buttons,
+  .logout {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .button {
+    border: none;
+    padding: 10px; /* Increased padding for buttons */
+    border-radius: 6px;
+    color: white;
+    font-weight: 600; /* Bolder button text */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
+  }
+  
+  .button:focus {
+    outline: none;
+  }
+  
+  .logout {
+    background-color: tomato;
+  }
+  
+  .login {
+    background-color: teal;
+    margin-right: 10px;
+  }
+  
+  .register {
+    background-color: slateblue;
+  }
+  
+  .login:hover,
+  .register:hover,
+  .logout:hover {
+    background-color: darkslategray; /* Darker color on hover for buttons */
+    transform: scale(1.05); /* Slight scaling on hover */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .card {
+      width: 90%; /* Responsive card width */
+    }
+  }
+  
