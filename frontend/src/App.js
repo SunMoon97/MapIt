@@ -1,13 +1,13 @@
-// App.js
 import "./app.css";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { useEffect, useState } from "react";
-import { Room, Star, Close } from "@mui/icons-material"; // Importing Close icon
+import { Room, Star, Close } from "@mui/icons-material";
 import axios from "axios";
 import { format } from "timeago.js";
 import Register from "./components/Register";
 import Login from "./components/Login";
-
+import Snackbar from '@mui/material/Snackbar'; // Import Snackbar for user feedback
+import Alert from '@mui/material/Alert'; // Import Alert for Snackbar
 
 function App() {
   const myStorage = window.localStorage;
@@ -15,8 +15,8 @@ function App() {
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [desc, setDesc] = useState(null);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
   const [star, setStar] = useState(0);
   const [viewport, setViewport] = useState({
     latitude: 47.040182,
@@ -25,6 +25,8 @@ function App() {
   });
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
@@ -41,6 +43,12 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!title || !desc || star === 0) {
+      setSnackbarMessage("Please fill all fields!");
+      setSnackbarOpen(true);
+      return;
+    }
+
     const newPin = {
       username: currentUsername,
       title,
@@ -51,18 +59,25 @@ function App() {
     };
 
     try {
-      const res = await axios.post("/pins", newPin);
+      const res = await axios.post("/api/pins", newPin);
       setPins([...pins, res.data]);
       setNewPlace(null);
+      setTitle(""); // Reset form fields
+      setDesc("");
+      setStar(0);
+      setSnackbarMessage("Pin added successfully!");
+      setSnackbarOpen(true);
     } catch (err) {
       console.log(err);
+      setSnackbarMessage("Error adding pin. Please try again.");
+      setSnackbarOpen(true);
     }
   };
 
   useEffect(() => {
     const getPins = async () => {
       try {
-        const allPins = await axios.get("/pins");
+        const allPins = await axios.get("/api/pins");
         setPins(allPins.data);
       } catch (err) {
         console.log(err);
@@ -76,11 +91,15 @@ function App() {
     myStorage.removeItem("user");
   };
 
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken="pk.eyJ1Ijoic3VubW9vbjk3IiwiYSI6ImNtMzNiMGI1MjFmYm4ybXNnZHBhd3dlb3UifQ.ftfHSsAfm9OLi_SPLRNtlQ"
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
         width="100%"
         height="100%"
         transitionDuration="200"
@@ -166,26 +185,23 @@ function App() {
                   <label>Title</label>
                   <input
                     placeholder="Enter a title"
+                    value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <label>Description</label>
                   <textarea
                     placeholder="Say something about this place."
+                    value={desc}
                     onChange={(e) => setDesc(e.target.value)}
                   />
                   <label>Rating</label>
-                  <select onChange={(e) => setStar(e.target.value)}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-
+                  <select onChange={(e) => setStar(Number(e.target.value))}>
+                    <option value="0">Select a rating</option>
+                    {[1, 2, 3, 4, 5].map(num => (
+                      <option key={num} value={num}>{num}</option>
+                    ))}
                   </select>
-                  
-                  {/* add line break for space */}
-                  <br></br>
-                  
+                  <br />
                   <button type="submit" className="submitButton">
                     Add Pin
                   </button>
@@ -220,6 +236,12 @@ function App() {
           />
         )}
       </ReactMapGL>
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="info" sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

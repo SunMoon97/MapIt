@@ -3,6 +3,16 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
 //REGISTER
+
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find(); // Retrieves all users
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.post("/register", async (req, res) => {
   try {
     //generate new password
