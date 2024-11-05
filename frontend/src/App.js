@@ -10,6 +10,7 @@ import Snackbar from '@mui/material/Snackbar'; // Import Snackbar for user feedb
 import Alert from '@mui/material/Alert'; // Import Alert for Snackbar
 
 function App() {
+  const api_url = process.env.REACT_APP_API_URL;
   const myStorage = window.localStorage;
   const [currentUsername, setCurrentUsername] = useState(myStorage.getItem("user"));
   const [pins, setPins] = useState([]);
@@ -59,7 +60,7 @@ function App() {
     };
 
     try {
-      const res = await axios.post("/api/pins", newPin);
+      const res = await axios.post(`${api_url}/api/pins`, newPin);
       setPins([...pins, res.data]);
       setNewPlace(null);
       setTitle(""); // Reset form fields
@@ -77,7 +78,8 @@ function App() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const allPins = await axios.get("/api/pins");
+        const api_url = process.env.REACT_APP_API_URL;
+        const allPins = await axios.get(`${api_url}/api/pins`);
         setPins(allPins.data);
       } catch (err) {
         console.log(err);

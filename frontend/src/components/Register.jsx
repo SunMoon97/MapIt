@@ -21,7 +21,8 @@ export default function Register({ setShowRegister }) {
     };
 
     try {
-      await axios.post("/api/users/register", newUser);
+      const api_url = process.env.REACT_APP_API_URL;
+      await axios.post(`${api_url}/api/users/register`, newUser);
       setError(false);
       setSuccess(true);
     } catch (err) {

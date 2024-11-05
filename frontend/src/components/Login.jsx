@@ -17,7 +17,8 @@ export default function Login({ setShowLogin, setCurrentUsername, myStorage }) {
       password: passwordRef.current.value,
     };
     try {
-      const res = await axios.post("/api/users/login", user);
+      const api_url = process.env.REACT_APP_API_URL;
+      const res = await axios.post(`${api_url}/api/users/login`, user);
       setCurrentUsername(res.data.username);
       myStorage.setItem('user', res.data.username);
       setShowLogin(false);
